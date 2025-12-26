@@ -17,17 +17,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       overflow: hidden;
       padding: 15px;
     }
 
     .card {
-      background: #fff;
+      background: white;
       width: 100%;
       max-width: 360px;
       padding: 25px 20px;
-      border-radius: 20px;
+      border-radius: 22px;
       text-align: center;
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       z-index: 1;
@@ -46,20 +46,20 @@
       margin: 10px 0;
     }
 
-    button {
+    .music-btn {
+      margin-top: 18px;
       width: 100%;
-      margin-top: 20px;
       padding: 14px;
       border: none;
       border-radius: 30px;
-      background: #1877f2;
+      background: #e91e63;
       color: white;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:active {
+    .music-btn:active {
       transform: scale(0.97);
     }
 
@@ -90,31 +90,29 @@
     <h1>Para Emily 💖</h1>
     <p>
       Emily, hice este pequeño regalo pensando en ti.  
-      Gracias por existir y hacer mis días más bonitos ✨
+      Cada detalle lleva un pedacito de mi cariño ✨
     </p>
     <p>
-      Con todo mi cariño 💕
+      Gracias por hacer mis días más bonitos 💕
     </p>
 
-    <button onclick="compartir()">
-      Compartir en Facebook
+    <button class="music-btn" onclick="playMusic()">
+      🎵 Toca para escuchar
     </button>
   </div>
 
-  <script>
-    function compartir() {
-      const url = encodeURIComponent(window.location.href);
-      const texto = encodeURIComponent(
-        "Un pequeño regalo hecho con mucho cariño para Emily 💖"
-      );
+  <!-- Música bonita (instrumental y suave) -->
+  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c2c9df39a.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
+  </audio>
 
-      window.open(
-        `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${texto}`,
-        "_blank"
-      );
+  <script>
+    function playMusic() {
+      const music = document.getElementById("music");
+      music.play();
     }
 
-    // Corazones optimizados para celular
+    // Corazones flotando (optimizado para móvil)
     setInterval(() => {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -123,9 +121,7 @@
       heart.style.fontSize = (14 + Math.random() * 18) + "px";
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 6000);
     }, 400);
   </script>
 
