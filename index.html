@@ -6,9 +6,7 @@
   <title>Para Emily 💖</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -46,21 +44,33 @@
       margin: 10px 0;
     }
 
-    .music-btn {
-      margin-top: 18px;
-      width: 100%;
-      padding: 14px;
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .overlay div {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .overlay button {
+      margin-top: 15px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 30px;
+      border-radius: 25px;
       background: #e91e63;
       color: white;
       font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
-    }
-
-    .music-btn:active {
-      transform: scale(0.97);
     }
 
     .heart {
@@ -72,14 +82,8 @@
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-110vh);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-110vh); opacity: 0; }
     }
   </style>
 </head>
@@ -89,30 +93,45 @@
   <div class="card">
     <h1>Para Emily 💖</h1>
     <p>
-      Emily, hice este pequeño regalo pensando en ti.  
-      Cada detalle lleva un pedacito de mi cariño ✨
+      Emily, este pequeño regalo es para ti.  
+      Cada latido y cada detalle llevan mi cariño ✨
     </p>
     <p>
-      Gracias por hacer mis días más bonitos 💕
+      Gracias por existir 💕
     </p>
-
-    <button class="music-btn" onclick="playMusic()">
-      🎵 Toca para escuchar
-    </button>
   </div>
 
-  <!-- Música bonita (instrumental y suave) -->
+  <!-- Pantalla para activar música -->
+  <div class="overlay" id="overlay">
+    <div>
+      <h3>🎵 Un detalle especial</h3>
+      <p>Toca para escuchar la música</p>
+      <button onclick="startMusic()">Comenzar 💖</button>
+    </div>
+  </div>
+
   <audio id="music" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c2c9df39a.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    function playMusic() {
-      const music = document.getElementById("music");
+    const music = document.getElementById("music");
+    const overlay = document.getElementById("overlay");
+
+    // Intento automático (PC a veces lo permite)
+    music.volume = 0.6;
+    music.play().then(() => {
+      overlay.style.display = "none";
+    }).catch(() => {
+      // En celular mostrará el overlay
+    });
+
+    function startMusic() {
       music.play();
+      overlay.style.display = "none";
     }
 
-    // Corazones flotando (optimizado para móvil)
+    // Corazones
     setInterval(() => {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -120,7 +139,6 @@
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.fontSize = (14 + Math.random() * 18) + "px";
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 6000);
     }, 400);
   </script>
