@@ -1,145 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Emily 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Emily 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      padding: 15px;
-    }
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    padding: 15px;
+  }
 
-    .card {
-      background: white;
-      width: 100%;
-      max-width: 360px;
-      padding: 25px;
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
+  .card {
+    background: white;
+    width: 100%;
+    max-width: 360px;
+    padding: 25px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
 
-    h1 {
-      color: #e91e63;
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
+  h1 {
+    color: #e91e63;
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
 
-    p {
-      font-size: 17px;
-      color: #444;
-      line-height: 1.5;
-    }
+  p {
+    font-size: 17px;
+    color: #444;
+    line-height: 1.5;
+  }
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 5;
-    }
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
 
-    .overlay-box {
-      background: white;
-      padding: 25px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 300px;
-    }
+  .overlay-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 300px;
+  }
 
-    .overlay-box button {
-      margin-top: 15px;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 25px;
-      background: #e91e63;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+  .overlay-box button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #e91e63;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-    .heart {
-      position: fixed;
-      bottom: -20px;
-      color: #e91e63;
-      animation: floatUp 6s linear forwards;
-      pointer-events: none;
-    }
+  .heart, .kitty {
+    position: fixed;
+    bottom: -20px;
+    pointer-events: none;
+  }
 
-    @keyframes floatUp {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-110vh); opacity: 0; }
-    }
+  .heart {
+    color: #e91e63;
+    animation: floatUp 6s linear forwards;
+  }
 
-    audio { display: none; }
-  </style>
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+  }
+
+  audio { display: none; }
+</style>
 </head>
 
 <body>
 
-  <div class="card">
-    <h1>Para Emily 💖</h1>
-    <p>
-      Emily, este pequeño detalle es para ti.  
-      Está hecho con todo mi cariño ✨
-    </p>
-    <p>
-      Espero que te haga sonreír 💕
-    </p>
+<div class="card">
+  <h1>Para Emily 💖</h1>
+  <p>
+    Emily, este pequeño detalle es para ti.<br>
+    Hecho con todo mi cariño ✨
+  </p>
+  <p>
+    Espero que te haga sonreír 💕
+  </p>
+</div>
+
+<!-- Overlay de inicio -->
+<div class="overlay" id="overlay">
+  <div class="overlay-box">
+    <h3>🎵 Un detalle especial</h3>
+    <p>Toca para escuchar la música</p>
+    <button id="startBtn">Comenzar 💖</button>
   </div>
+</div>
 
-  <!-- Aviso para activar música -->
-  <div class="overlay" id="overlay">
-    <div class="overlay-box">
-      <h3>🎵 Un detalle especial</h3>
-      <p>Toca el boton Comenzar</p>
-      <button id="startBtn">Comenzar 💖</button>
-    </div>
-  </div>
+<!-- Música romántica instrumental -->
+<audio id="music" preload="auto" loop>
+  <source src="ROMANTIC_TRACK.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- Música romántica instrumental -->
-  <audio id="music" preload="auto" loop>
-    <source src="ROMANTIC_TRACK.mp3" type="audio/mpeg">
-  </audio>
+<script>
+const music = document.getElementById("music");
+const overlay = document.getElementById("overlay");
+const startBtn = document.getElementById("startBtn");
 
-  <script>
-    const music = document.getElementById("music");
-    const overlay = document.getElementById("overlay");
-    const startBtn = document.getElementById("startBtn");
+startBtn.addEventListener("click", () => {
+  music.muted = false;
+  music.volume = 0.6;
+  music.play().then(() => {
+    overlay.style.display = "none";
+  }).catch(() => {
+    alert("🔊 Sube el volumen y vuelve a tocar 💖");
+  });
+});
 
-    startBtn.addEventListener("click", () => {
-      music.muted = false;
-      music.volume = 0.6;
-      music.play().then(() => {
-        overlay.style.display = "none";
-      }).catch(() => {
-        alert("🔊 Sube el volumen y vuelve a tocar 💖");
-      });
-    });
+// Corazones flotando
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (14 + Math.random() * 18) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
 
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (14 + Math.random() * 18) + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }, 400);
-  </script>
+// Gatitos enamorados animados
+const kittyImages = [
+  "catloves.gif", // puedes reemplazar con tus PNG
+  "catloves.gif"
+];
+
+setInterval(() => {
+  const kitty = document.createElement("img");
+  kitty.src = kittyImages[Math.floor(Math.random() * kittyImages.length)];
+  kitty.className = "kitty";
+  kitty.style.width = (40 + Math.random() * 30) + "px";
+  kitty.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(kitty);
+
+  // Animación de subida con giro
+  const duration = 6000 + Math.random() * 2000;
+  kitty.animate([
+    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+    { transform: `translateY(-110vh) rotate(${Math.random()*360}deg)`, opacity: 0 }
+  ], {
+    duration: duration,
+    iterations: 1,
+    easing: 'linear'
+  });
+
+  setTimeout(() => kitty.remove(), duration);
+}, 1200);
+</script>
 
 </body>
 </html>
